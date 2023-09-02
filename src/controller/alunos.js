@@ -2,7 +2,26 @@ const { alunos } = require("../dados/bd");
 let { identificadorAluno } = require("../dados/bd");
 
 function listaAlunos(req, res) {
-  return res.json(alunos);
+  const { id } = req.params;
+  const alunoFindId = alunos.find((aluno) => aluno.id == id);
+
+  if (!id || alunos.length == 0) {
+    return res.json(alunos);
+  }
+
+  if (id < 1) {
+    return res
+      .status(401)
+      .json({ mensagem: "O id precisa ser um número valido. " });
+  }
+
+  if (!alunoFindId) {
+    return res
+      .status(404)
+      .json({ mensagem: "O aluno não foi encontrado na lista." });
+  }
+
+  return res.status(200).json(alunoFindId);
 }
 
 function cadastraAluno(req, res) {
