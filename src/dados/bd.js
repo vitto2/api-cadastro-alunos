@@ -1,11 +1,3 @@
-const alunos = [
-  {
-    id: 3,
-    nome: "Marcos",
-    sobrenome: "Silveira",
-    idade: 36,
-    curso: "Programação do Zero",
-  },
-];
+const alunos = { identificadorAluno: 1, alunos: [] };
 
 module.exports = alunos;
