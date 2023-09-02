@@ -64,7 +64,26 @@ function cadastraAluno(req, res) {
 
   return res.status(201).json();
 }
+
+function deletaAluno(req, res) {
+  const { id } = req.params;
+
+  const findAluno = alunos.findIndex((aluno) => aluno.id == id);
+
+  if (id < 1) {
+    return res.status(400).json({ mensagem: "ID inválido." });
+  }
+
+  if (findAluno == -1) {
+    return res.status(401).json({ mensagem: "Aluno não encontrado." });
+  }
+
+  alunos.splice(findAluno, 1);
+
+  res.status(200).json({ Removido: alunos[findAluno] });
+}
 module.exports = {
   listaAlunos,
   cadastraAluno,
+  deletaAluno,
 };
