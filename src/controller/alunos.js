@@ -27,18 +27,29 @@ function listaAlunos(req, res) {
 function cadastraAluno(req, res) {
   const { nome, sobrenome, idade, curso } = req.body;
 
-  if (!nome) {
-    res.status(401).json({ mensagem: "O nome precisa ser preenchido." });
+  nome.trim();
+
+  if (!nome || nome.trim() == "") {
+    return res.status(400).json({ mensagem: "O nome precisa ser preenchido." });
   }
 
-  if (!sobrenome) {
-    res.status(401).json({ mensagem: "O sobrenome precisa ser preenchido." });
+  if (!sobrenome || sobrenome.trim() == "") {
+    return res
+      .status(400)
+      .json({ mensagem: "O sobrenome precisa ser preenchido." });
   }
-  if (!idade) {
-    res.status(401).json({ mensagem: "O idade precisa ser preenchido." });
+
+  if (!idade || idade < 18) {
+    return res.status(400).json({
+      mensagem:
+        "A idade do aluno precisar maior que 18 e o campo não pode estar vazio.",
+    });
   }
-  if (!curso) {
-    res.status(401).json({ mensagem: "O curso precisa ser preenchido." });
+
+  if (!curso || curso.trim() == "") {
+    return res
+      .status(400)
+      .json({ mensagem: "O curso precisa ser preenchido." });
   }
 
   const aluno = {
@@ -51,7 +62,7 @@ function cadastraAluno(req, res) {
 
   alunos.push(aluno);
 
-  return res.status(201).json(aluno);
+  return res.status(201).json();
 }
 module.exports = {
   listaAlunos,
